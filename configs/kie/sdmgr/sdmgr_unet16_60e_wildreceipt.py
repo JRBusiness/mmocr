@@ -32,7 +32,7 @@ test_pipeline = [
 ]
 
 dataset_type = 'KIEDataset'
-data_root = 'data/wildreceipt'
+data_root = 'tests/dataset/'
 
 loader = dict(
     type='HardDiskLoader',
@@ -43,24 +43,24 @@ loader = dict(
 
 train = dict(
     type=dataset_type,
-    ann_file=f'{data_root}/train.txt',
+    ann_file=f'{data_root}/closeset_train.txt',
     pipeline=train_pipeline,
-    img_prefix=data_root,
+    img_prefix=f'{data_root}/train/',
     loader=loader,
     dict_file=f'{data_root}/dict.txt',
     test_mode=False)
 test = dict(
     type=dataset_type,
-    ann_file=f'{data_root}/test.txt',
+    ann_file=f'{data_root}/closeset_test.txt',
     pipeline=test_pipeline,
-    img_prefix=data_root,
+    img_prefix=f'{data_root}/test/',
     loader=loader,
     dict_file=f'{data_root}/dict.txt',
     test_mode=True)
 
 data = dict(
-    samples_per_gpu=4,
-    workers_per_gpu=4,
+    samples_per_gpu=2,
+    workers_per_gpu=2,
     val_dataloader=dict(samples_per_gpu=1),
     test_dataloader=dict(samples_per_gpu=1),
     train=train,
@@ -92,10 +92,10 @@ lr_config = dict(
     warmup_iters=1,
     warmup_ratio=1,
     step=[40, 50])
-total_epochs = 60
+total_epochs = 1
 
 checkpoint_config = dict(interval=1)
-log_config = dict(interval=50, hooks=[dict(type='TextLoggerHook')])
+log_config = dict(interval=1, hooks=[dict(type='TextLoggerHook')])
 dist_params = dict(backend='nccl')
 log_level = 'INFO'
 load_from = None

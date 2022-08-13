@@ -62,6 +62,7 @@ def convert(closeset_line, merge_bg_others=False, ignore_idx=0, others_idx=25):
                     anno['label'] = openset_node_label_mapping['value']
             else:
                 tmp_key = 'key'
+                label_with_same_edge = ""
                 if label in closeset_key_inds:
                     label_with_same_edge = closeset_value_inds[
                         closeset_key_inds.index(label)]

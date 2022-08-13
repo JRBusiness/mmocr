@@ -42,7 +42,7 @@ test_pipeline = [
 ]
 
 dataset_type = 'OpensetKIEDataset'
-data_root = 'data/wildreceipt'
+data_root = 'tests/dataset'
 
 loader = dict(
     type='HardDiskLoader',
@@ -53,18 +53,18 @@ loader = dict(
 
 train = dict(
     type=dataset_type,
-    ann_file=f'{data_root}/openset_train.txt',
+    ann_file=f'{data_root}/train/train.txt',
     pipeline=train_pipeline,
-    img_prefix=data_root,
+    img_prefix=f'{data_root}/train/',
     link_type='one-to-many',
     loader=loader,
     dict_file=f'{data_root}/dict.txt',
     test_mode=False)
 test = dict(
     type=dataset_type,
-    ann_file=f'{data_root}/openset_test.txt',
+    ann_file=f'{data_root}/test/test.txt',
     pipeline=test_pipeline,
-    img_prefix=data_root,
+    img_prefix=f'{data_root}/test/',
     link_type='one-to-many',
     loader=loader,
     dict_file=f'{data_root}/dict.txt',
@@ -79,6 +79,9 @@ data = dict(
     val=test,
     test=test)
 
+checkpoint_config = dict(interval=1)
+log_config = dict(interval=1, hooks=[dict(type='TextLoggerHook')])
 evaluation = dict(interval=1, metric='openset_f1', metric_options=None)
+
 
 find_unused_parameters = True
