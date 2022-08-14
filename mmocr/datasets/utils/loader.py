@@ -80,20 +80,20 @@ class AnnFileLoader:
         self.ori_data_infos.close()
 
 
-@LOADERS.register_module()
-class HardDiskLoader(AnnFileLoader):
-    """Load txt format annotation file from hard disks."""
-
-    def __init__(self, ann_file, parser, repeat=1):
-        warnings.warn(
-            'HardDiskLoader is deprecated, please use '
-            'AnnFileLoader instead.', UserWarning)
-        super().__init__(
-            ann_file,
-            parser,
-            repeat,
-            file_storage_backend='disk',
-            file_format='txt')
+# @LOADERS.register_module()
+# class AnnFileLoader(AnnFileLoader):
+#     """Load txt format annotation file from hard disks."""
+#
+#     def __init__(self, ann_file, parser, repeat=1):
+#         warnings.warn(
+#             'AnnFileLoader is deprecated, please use '
+#             'AnnFileLoader instead.', UserWarning)
+#         super().__init__(
+#             ann_file,
+#             parser,
+#             repeat,
+#             file_storage_backend='disk',
+#             file_format='txt')
 
 
 @LOADERS.register_module()

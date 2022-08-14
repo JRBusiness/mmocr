@@ -116,7 +116,7 @@ Check out our [API doc](https://mmocr.readthedocs.io/en/latest/api.html#mmocr.co
 
 We have designed new types of dataset consisting of **loader** , **backend**, and **parser** to load and parse different types of annotation files.
 
-- **loader**: Load the annotation file. We now have a unified loader, `AnnFileLoader`, which can use different `backend` to load annotation from txt. The original `HardDiskLoader` and `LmdbLoader` will be deprecated.
+- **loader**: Load the annotation file. We now have a unified loader, `AnnFileLoader`, which can use different `backend` to load annotation from txt. The original `AnnFileLoader` and `LmdbLoader` will be deprecated.
 - **backend**: Load annotation from different format and backend.
   - `LmdbAnnFileBackend`: Load annotation from lmdb dataset.
   - `HardDiskAnnFileBackend`: Load annotation file with raw hard disks storage backend. The annotation format can be either txt or lmdb.
@@ -150,7 +150,7 @@ test = dict(
 
 The results are generated in the same way as the segmentation-based text recognition task above.
 You can check the content of the annotation file in `tests/data/toy_dataset/instances_test.txt`.
-The combination of `HardDiskLoader` and `LineJsonParser` will return a dict for each file by calling `__getitem__`:
+The combination of `AnnFileLoader` and `LineJsonParser` will return a dict for each file by calling `__getitem__`:
 
 ```python
 {"file_name": "test/img_10.jpg", "height": 720, "width": 1280, "annotations": [{"iscrowd": 1, "category_id": 1, "bbox": [260.0, 138.0, 24.0, 20.0], "segmentation": [[261, 138, 284, 140, 279, 158, 260, 158]]}, {"iscrowd": 0, "category_id": 1, "bbox": [288.0, 138.0, 129.0, 23.0], "segmentation": [[288, 138, 417, 140, 416, 161, 290, 157]]}, {"iscrowd": 0, "category_id": 1, "bbox": [743.0, 145.0, 37.0, 18.0], "segmentation": [[743, 145, 779, 146, 780, 163, 746, 163]]}, {"iscrowd": 0, "category_id": 1, "bbox": [783.0, 129.0, 50.0, 26.0], "segmentation": [[783, 129, 831, 132, 833, 155, 785, 153]]}, {"iscrowd": 1, "category_id": 1, "bbox": [831.0, 133.0, 43.0, 23.0], "segmentation": [[831, 133, 870, 135, 874, 156, 835, 155]]}, {"iscrowd": 1, "category_id": 1, "bbox": [159.0, 204.0, 72.0, 15.0], "segmentation": [[159, 205, 230, 204, 231, 218, 159, 219]]}, {"iscrowd": 1, "category_id": 1, "bbox": [785.0, 158.0, 75.0, 21.0], "segmentation": [[785, 158, 856, 158, 860, 178, 787, 179]]}, {"iscrowd": 1, "category_id": 1, "bbox": [1011.0, 157.0, 68.0, 16.0], "segmentation": [[1011, 157, 1079, 160, 1076, 173, 1011, 170]]}]}
@@ -197,7 +197,7 @@ train = dict(
 #### Annotation Format
 
 You can check the content of the annotation file in `tests/data/ocr_toy_dataset/label.txt`.
-The combination of `HardDiskLoader` and `LineStrParser` will return a dict for each file by calling `__getitem__`: `{'filename': '1223731.jpg', 'text': 'GRAND'}`.
+The combination of `AnnFileLoader` and `LineStrParser` will return a dict for each file by calling `__getitem__`: `{'filename': '1223731.jpg', 'text': 'GRAND'}`.
 
 #### Loading LMDB Datasets
 
@@ -288,7 +288,7 @@ train = dict(
 #### Annotation Format
 
 You can check the content of the annotation file in `tests/data/ocr_char_ann_toy_dataset/instances_train.txt`.
-The combination of `HardDiskLoader` and `LineJsonParser` will return a dict for each file by calling `__getitem__` each time:
+The combination of `AnnFileLoader` and `LineJsonParser` will return a dict for each file by calling `__getitem__` each time:
 
 ```python
 {"file_name": "resort_88_101_1.png", "annotations": [{"char_text": "F", "char_box": [11.0, 0.0, 22.0, 0.0, 12.0, 12.0, 0.0, 12.0]}, {"char_text": "r", "char_box": [23.0, 2.0, 31.0, 1.0, 24.0, 11.0, 16.0, 11.0]}, {"char_text": "o", "char_box": [33.0, 2.0, 43.0, 2.0, 36.0, 12.0, 25.0, 12.0]}, {"char_text": "m", "char_box": [46.0, 2.0, 61.0, 2.0, 53.0, 12.0, 39.0, 12.0]}, {"char_text": ":", "char_box": [61.0, 2.0, 69.0, 2.0, 63.0, 12.0, 55.0, 12.0]}], "text": "From:"}

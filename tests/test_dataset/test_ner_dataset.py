@@ -33,7 +33,7 @@ def _create_dummy_vocab_file(vocab_file):
 
 def _create_dummy_loader():
     loader = dict(
-        type='HardDiskLoader',
+        type='AnnFileLoader',
         repeat=1,
         parser=dict(type='LineJsonParser', keys=['text', 'label']))
     return loader

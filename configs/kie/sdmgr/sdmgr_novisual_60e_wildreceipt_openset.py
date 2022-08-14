@@ -45,7 +45,7 @@ dataset_type = 'OpensetKIEDataset'
 data_root = 'tests/dataset'
 
 loader = dict(
-    type='HardDiskLoader',
+    type='AnnFileLoader',
     repeat=1,
     parser=dict(
         type='LineJsonParser',

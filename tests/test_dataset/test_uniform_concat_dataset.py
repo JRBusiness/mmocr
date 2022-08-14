@@ -19,7 +19,7 @@ def test_uniform_concat_dataset_pipeline():
         img_prefix=img_prefix,
         ann_file=ann_file,
         loader=dict(
-            type='HardDiskLoader',
+            type='AnnFileLoader',
             repeat=1,
             parser=dict(
                 type='LineStrParser',

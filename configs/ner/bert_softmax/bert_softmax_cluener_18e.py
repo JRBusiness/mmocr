@@ -14,7 +14,7 @@ vocab_file = 'data/cluener2020/vocab.txt'
 
 max_len = 128
 loader = dict(
-    type='HardDiskLoader',
+    type='AnnFileLoader',
     repeat=1,
     parser=dict(type='LineJsonParser', keys=['text', 'label']))
 

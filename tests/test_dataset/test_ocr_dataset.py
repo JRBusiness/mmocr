@@ -17,7 +17,7 @@ def _create_dummy_ann_file(ann_file):
 
 def _create_dummy_loader():
     loader = dict(
-        type='HardDiskLoader',
+        type='AnnFileLoader',
         repeat=1,
         parser=dict(type='LineStrParser', keys=['file_name', 'text']))
     return loader

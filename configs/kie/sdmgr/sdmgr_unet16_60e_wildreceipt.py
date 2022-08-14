@@ -35,7 +35,7 @@ dataset_type = 'KIEDataset'
 data_root = 'tests/dataset/'
 
 loader = dict(
-    type='HardDiskLoader',
+    type='AnnFileLoader',
     repeat=1,
     parser=dict(
         type='LineJsonParser',
@@ -53,14 +53,14 @@ test = dict(
     type=dataset_type,
     ann_file=f'{data_root}/closeset_test.txt',
     pipeline=test_pipeline,
-    img_prefix=f'{data_root}/test/',
+    img_prefix=f'{data_root}/validate/',
     loader=loader,
     dict_file=f'{data_root}/dict.txt',
     test_mode=True)
 
 data = dict(
-    samples_per_gpu=2,
-    workers_per_gpu=2,
+    samples_per_gpu=1,
+    workers_per_gpu=1,
     val_dataloader=dict(samples_per_gpu=1),
     test_dataloader=dict(samples_per_gpu=1),
     train=train,
@@ -92,7 +92,7 @@ lr_config = dict(
     warmup_iters=1,
     warmup_ratio=1,
     step=[40, 50])
-total_epochs = 1
+total_epochs = 60
 
 checkpoint_config = dict(interval=1)
 log_config = dict(interval=1, hooks=[dict(type='TextLoggerHook')])

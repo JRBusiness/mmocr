@@ -1,4 +1,4 @@
-# Copyright (c) OpenMMLab. All rights reserved.
+    # Copyright (c) OpenMMLab. All rights reserved.
 from mmdet.datasets.builder import DATASETS, build_dataloader, build_dataset
 
 from . import utils

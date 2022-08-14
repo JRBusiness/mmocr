@@ -482,7 +482,7 @@ Some refactoring processes are still going on. For text recognition models, we u
 
 ### Migration Guide - Dataset Annotation Loader
 
-The annotation loaders, `LmdbLoader` and `HardDiskLoader`, are unified into `AnnFileLoader` for a more consistent design and wider support on different file formats and storage backends. `AnnFileLoader` can load the annotations from `disk`(default), `http` and `petrel` backend, and parse the annotation in `txt` or `lmdb` format. `LmdbLoader` and `HardDiskLoader` are deprecated, and users are recommended to modify their configs to use the new `AnnFileLoader`. Users can migrate their legacy loader `HardDiskLoader` referring to the following example:
+The annotation loaders, `LmdbLoader` and `AnnFileLoader`, are unified into `AnnFileLoader` for a more consistent design and wider support on different file formats and storage backends. `AnnFileLoader` can load the annotations from `disk`(default), `http` and `petrel` backend, and parse the annotation in `txt` or `lmdb` format. `LmdbLoader` and `AnnFileLoader` are deprecated, and users are recommended to modify their configs to use the new `AnnFileLoader`. Users can migrate their legacy loader `AnnFileLoader` referring to the following example:
 
 ```python
 # Legacy config
@@ -490,7 +490,7 @@ train = dict(
     type='OCRDataset',
     ...
     loader=dict(
-        type='HardDiskLoader',
+        type='AnnFileLoader',
         ...))
 
 # Suggested config

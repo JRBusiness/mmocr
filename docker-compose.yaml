@@ -5,10 +5,5 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile
-    image: mmorc:latest
+    image: lookupboss/mmorc:latest
     container_name: mmocr
-    volumes:
-      - 'mmocr-data:/mmocr'
-
-volumes:
-  mmocr-data:

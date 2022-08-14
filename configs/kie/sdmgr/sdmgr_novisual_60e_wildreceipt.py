@@ -25,10 +25,10 @@ test_pipeline = [
 ]
 
 dataset_type = 'KIEDataset'
-data_root = 'data/wildreceipt'
+data_root = 'tests/dataset'
 
 loader = dict(
-    type='HardDiskLoader',
+    type='AnnFileLoader',
     repeat=1,
     parser=dict(
         type='LineJsonParser',
@@ -36,17 +36,17 @@ loader = dict(
 
 train = dict(
     type=dataset_type,
-    ann_file=f'{data_root}/train.txt',
+    ann_file=f'{data_root}/closeset_train.txt',
     pipeline=train_pipeline,
-    img_prefix=data_root,
+    img_prefix=f'{data_root}/train',
     loader=loader,
     dict_file=f'{data_root}/dict.txt',
     test_mode=False)
 test = dict(
     type=dataset_type,
-    ann_file=f'{data_root}/test.txt',
+    ann_file=f'{data_root}/closeset_test.txt',
     pipeline=test_pipeline,
-    img_prefix=data_root,
+    img_prefix=f'{data_root}/test',
     loader=loader,
     dict_file=f'{data_root}/dict.txt',
     test_mode=True)
