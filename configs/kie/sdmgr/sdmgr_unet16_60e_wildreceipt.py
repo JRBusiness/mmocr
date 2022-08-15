@@ -32,7 +32,7 @@ test_pipeline = [
 ]
 
 dataset_type = 'KIEDataset'
-data_root = 'tests/dataset/'
+data_root = '/content/mmocr/tests/dataset/'
 
 loader = dict(
     type='AnnFileLoader',
@@ -53,14 +53,14 @@ test = dict(
     type=dataset_type,
     ann_file=f'{data_root}/closeset_test.txt',
     pipeline=test_pipeline,
-    img_prefix=f'{data_root}/validate/',
+    img_prefix=f'{data_root}/test/',
     loader=loader,
     dict_file=f'{data_root}/dict.txt',
     test_mode=True)
 
 data = dict(
-    samples_per_gpu=1,
-    workers_per_gpu=1,
+    samples_per_gpu=4,
+    workers_per_gpu=4,
     val_dataloader=dict(samples_per_gpu=1),
     test_dataloader=dict(samples_per_gpu=1),
     train=train,
