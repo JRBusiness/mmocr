@@ -23,7 +23,6 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 ENV PATH="/opt/conda/bin:$PATH"
-RUN export FORCE_CUDA=1
 
 # TORCHSEVER
 RUN pip install torchserve torch-model-archiver
@@ -36,19 +35,14 @@ RUN pip install mmdet==${MMDET}
 RUN pip install mmocr
 RUN useradd -m model-server \
     && mkdir -p /home/model-server/tmp
+ENV PATH="/home/model-server/bin:$PATH"
+COPY . /home/model-server
 
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-
-RUN chmod +x /usr/local/bin/entrypoint.sh \
-    && chown -R model-server /home/model-server
-
-COPY config.properties /home/model-server/config.properties
-RUN mkdir /home/model-server/model-store && chown -R model-server /home/model-server/model-store
-
-EXPOSE 8080 8081 8082
+RUN chmod +x  /home/model-server/docker/serve/entrypoint.sh && chown -R model-server /home/model-server/
+RUN chown -R model-server /home/model-server/model
 
 USER model-server
 WORKDIR /home/model-server
 ENV TEMP=/home/model-server/tmp
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["/home/model-server/docker/serve/entrypoint.sh"]
 CMD ["serve"]

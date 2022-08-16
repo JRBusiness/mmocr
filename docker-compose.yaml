@@ -1,9 +1,13 @@
 version: '3.3'
 
 services:
-  mmocr:
+  mmocr-serve:
     build:
       context: .
-      dockerfile: ./docker/Dockerfile
-    image: lookupboss/mmorc:latest
-    container_name: mmocr
+      dockerfile: ./docker/serve/Dockerfile
+    image: lookupboss/mmocr-serve:latest
+    container_name: mmocr-serve
+    ports:
+      - '8088:8080'
+      - '8089:8081'
+      - '8090:8082'

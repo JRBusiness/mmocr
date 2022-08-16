@@ -24,7 +24,7 @@ RUN conda clean --all
 RUN pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu101/torch1.6.0/index.html
 
 RUN pip install mmdet
-
+COPY docker/serve/ /usr/local/bin/
 COPY . /mmocr/
 WORKDIR /mmocr
 ENV FORCE_CUDA="1"
