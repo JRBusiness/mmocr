@@ -82,10 +82,11 @@ def converting_ubiai(data, write_file, labelss):
             #     'width': line['annotation'][0]['boundingBoxes'][0]['pageSize']['width'],
             #     'annotations': []
             # }
-            new_data = {
-                "name" :f'{name}.jpg',
-                "annotation": []
-            }
+            # new_data = {
+            #     "name" :f'{name}.jpg',
+            #     "annotation": []
+            # }
+            new_data = []
             bboxs = line['annotation']
             if bboxs:
                 for item in bboxs:
@@ -101,7 +102,7 @@ def converting_ubiai(data, write_file, labelss):
                                     'transcription': text,
                                     'points': bbox,
                                 }
-                                new_data['annotations'].append(labels)
+                                new_data.append(json.dumps(labels))
                 print(new_data)
                 json.dump(new_data, write_file)
 
@@ -146,10 +147,10 @@ if __name__ == '__main__':
     #     with open(f'wildreceipt/openset_{i}.txt', 'w') as f:
     #         for file in glob(f'wildreceipt/{i}/*.json'):
     #             converting(file, f)
-    # file = 'wildreceipt/annotate.json'
-    # data = json.load(open(file, 'r'))
-    # list_class = open('wildreceipt/class_list.txt', 'r').readlines()
-    # with open(f'wildreceipt/closeset_train.txt', 'w', encoding='utf-8') as f:
-    #     converting_ubiai(data, f, list_class)
-    slipt_wildreceipt()
+    file = 'wildreceipt/annotate.json'
+    data = json.load(open(file, 'r'))
+    list_class = open('wildreceipt/class_list.txt', 'r').readlines()
+    with open(f'wildreceipt/closeset_train.txt', 'w', encoding='utf-8') as f:
+        converting_ubiai(data, f, list_class)
+    # slipt_wildreceipt()
     # get_class_list()
