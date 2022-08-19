@@ -55,9 +55,9 @@ def converting_hasty(data, write_file):
         if text:
             text = text[0][-1][0]
             labels = {
-                'box': item['points'],
-                'text': text,
-                'label': class_index[item['className']]
+                'label': class_index[item['className']],
+                'transcription': text,
+                'points': item['points'],
             }
             new_data['annotations'].append(labels)
             print(text, end='')
@@ -68,8 +68,7 @@ def converting_hasty(data, write_file):
 def get_bbox(bbox):
     list_items = []
     for bb in bbox:
-        for i in ['x', 'y']:
-            list_items.append(bb[i])
+        list_items.append([bb['x'], bb['y']])
     return list_items
 
 
@@ -77,11 +76,15 @@ def converting_ubiai(data, write_file, labelss):
     for line in data:
         name = line['documentName'].split('.jpg_')[0]
         if line['annotation']:
+            # new_data = {
+            #     'file_name': f'{name}.jpg',
+            #     'height': line['annotation'][0]['boundingBoxes'][0]['pageSize']['height'],
+            #     'width': line['annotation'][0]['boundingBoxes'][0]['pageSize']['width'],
+            #     'annotations': []
+            # }
             new_data = {
-                'file_name': f'{name}.jpg',
-                'height': line['annotation'][0]['boundingBoxes'][0]['pageSize']['height'],
-                'width': line['annotation'][0]['boundingBoxes'][0]['pageSize']['width'],
-                'annotations': []
+                "name" :f'{name}.jpg',
+                "annotation": []
             }
             bboxs = line['annotation']
             if bboxs:
@@ -94,9 +97,9 @@ def converting_ubiai(data, write_file, labelss):
                                 text = box['word']
                                 bbox = get_bbox(bbox)
                                 labels = {
-                                    'box': bbox,
-                                    'text': text,
-                                    'label': label
+                                    'label': label,
+                                    'transcription': text,
+                                    'points': bbox,
                                 }
                                 new_data['annotations'].append(labels)
                 print(new_data)
@@ -104,20 +107,20 @@ def converting_ubiai(data, write_file, labelss):
 
 
 
-def slipt_dataset():
+def slipt_wildreceipt():
     for i in ['train', 'test']:
-        with open(f'dataset/closeset_{i}.txt', 'r') as f:
+        with open(f'wildreceipt/wildreceipt_{i}.txt', 'r') as f:
             lines = f.readlines()
             for line in lines:
                 file_name = line.split('", "')[0].split('": "')[-1]
                 try:
-                    shutil.move(f'dataset/{file_name}', f'dataset/{i}/')
+                    shutil.move(f'wildreceipt/{file_name}', f'wildreceipt/{i}/')
                 except Exception as e:
                     print(e)
 
 
 def get_class_list():
-    file = 'dataset/annotate.json'
+    file = 'wildreceipt/annotate.json'
     data = json.load(open(file, 'r'))
     labels = []
     index = 0
@@ -132,21 +135,21 @@ def get_class_list():
                         seen.add(label)
                         labels.append(f'{index}  {label}\n')
                         index += 1
-    with open('dataset/class_list.txt', 'w') as f:
+    with open('wildreceipt/class_list.txt', 'w') as f:
         f.writelines(labels)
 
 if __name__ == '__main__':
-    # images_path = 'dataset/'
+    # images_path = 'wildreceipt/'
     # ocr = PaddleOCR(use_angle_cls=True, lang='en')
     # cataglog = ['train', 'test']
     # for i in cataglog:
-    #     with open(f'dataset/openset_{i}.txt', 'w') as f:
-    #         for file in glob(f'dataset/{i}/*.json'):
+    #     with open(f'wildreceipt/openset_{i}.txt', 'w') as f:
+    #         for file in glob(f'wildreceipt/{i}/*.json'):
     #             converting(file, f)
-    file = 'dataset/annotate.json'
-    data = json.load(open(file, 'r'))
-    list_class = open('dataset/class_list.txt', 'r').readlines()
-    with open(f'dataset/closeset_train.txt', 'w', encoding='utf-8') as f:
-        converting_ubiai(data, f, list_class)
-    # slipt_dataset()
+    # file = 'wildreceipt/annotate.json'
+    # data = json.load(open(file, 'r'))
+    # list_class = open('wildreceipt/class_list.txt', 'r').readlines()
+    # with open(f'wildreceipt/closeset_train.txt', 'w', encoding='utf-8') as f:
+    #     converting_ubiai(data, f, list_class)
+    slipt_wildreceipt()
     # get_class_list()
