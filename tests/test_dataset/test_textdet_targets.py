@@ -97,7 +97,7 @@ def test_dbnet_ignore_texts():
 
     results['gt_masks_ignore'] = PolygonMasks(text_polys_ignore, 40, 40)
     results['gt_masks'] = PolygonMasks(text_polys, 40, 40)
-    results['gt_bboxes'] = np.array([[0, 0, 10, 10], [20, 0, 30, 10]])
+    results<['gt_bboxes'] = np.array([[0, 0, 10, 10], [20, 0, 30, 10]])
     results['gt_labels'] = np.array([0, 1])
 
     target_generator.ignore_texts(results, ignore_tags)
