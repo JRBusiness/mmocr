@@ -68,25 +68,22 @@ def converting_hasty(data, write_file):
 def get_bbox(bbox):
     list_items = []
     for bb in bbox:
-        list_items.append([bb['x'], bb['y']])
+        for i in ["x", "y"]:
+            list_items.append(bb[i])
     return list_items
 
 
 def converting_ubiai(data, write_file, labelss):
+    final = []
     for line in data:
         name = line['documentName'].split('.jpg_')[0]
         if line['annotation']:
-            # new_data = {
-            #     'file_name': f'{name}.jpg',
-            #     'height': line['annotation'][0]['boundingBoxes'][0]['pageSize']['height'],
-            #     'width': line['annotation'][0]['boundingBoxes'][0]['pageSize']['width'],
-            #     'annotations': []
-            # }
-            # new_data = {
-            #     "name" :f'{name}.jpg',
-            #     "annotation": []
-            # }
-            new_data = []
+            new_data = {
+                'file_name': f'images_files/{name}.jpg',
+                'height': line['annotation'][0]['boundingBoxes'][0]['pageSize']['height'],
+                'width': line['annotation'][0]['boundingBoxes'][0]['pageSize']['width'],
+                'annotations': []
+            }
             bboxs = line['annotation']
             if bboxs:
                 for item in bboxs:
@@ -98,13 +95,14 @@ def converting_ubiai(data, write_file, labelss):
                                 text = box['word']
                                 bbox = get_bbox(bbox)
                                 labels = {
+                                    'box': bbox,
+                                    'text': text,
                                     'label': label,
-                                    'transcription': text,
-                                    'points': bbox,
                                 }
-                                new_data.append(json.dumps(labels))
+                                new_data["annotations"].append(labels)
                 print(new_data)
-                json.dump(new_data, write_file)
+                final.append(json.dumps(new_data))
+    write_file.writelines(line for line in final)
 
 
 
@@ -126,18 +124,18 @@ def get_class_list():
     labels = []
     index = 0
     seen = set()
-    for line in data:
-        if line['annotation']:
-            bboxs = line['annotation']
-            if bboxs:
-                for item in bboxs:
-                    label = item['label']
-                    if label not in seen:
-                        seen.add(label)
-                        labels.append(f'{index}  {label}\n')
-                        index += 1
     with open('wildreceipt/class_list.txt', 'w') as f:
-        f.writelines(labels)
+        for line in data:
+            if line['annotation']:
+                bboxs = line['annotation']
+                if bboxs:
+                    for item in bboxs:
+                        label = item['label']
+                        if label not in seen:
+                            seen.add(label)
+                            labels.append(f'{index}  {label}\n')
+                            index += 1
+        f.writelines([label for label in labels])
 
 if __name__ == '__main__':
     # images_path = 'wildreceipt/'
