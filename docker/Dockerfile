@@ -1,16 +1,12 @@
-
 ARG PYTORCH="1.6.0"
 ARG CUDA="10.1"
 ARG CUDNN="7"
-COPY . /mmocr/
+
 FROM pytorch/pytorch:${PYTORCH}-cuda${CUDA}-cudnn${CUDNN}-devel
 
 ENV TORCH_CUDA_ARCH_LIST="6.0 6.1 7.0+PTX"
 ENV TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
 ENV CMAKE_PREFIX_PATH="$(dirname $(which conda))/../"
-
-FROM nvidia/cuda:10.2-base
-CMD nvidia-smi
 
 # To fix GPG key error when running apt-get update
 RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
@@ -24,8 +20,8 @@ RUN conda clean --all
 RUN pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu101/torch1.6.0/index.html
 
 RUN pip install mmdet
-COPY docker/serve/ /usr/local/bin/
-COPY . /mmocr/
+
+RUN git clone https://github.com/open-mmlab/mmocr.git /mmocr
 WORKDIR /mmocr
 ENV FORCE_CUDA="1"
 RUN pip install -r requirements.txt
