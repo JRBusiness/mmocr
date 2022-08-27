@@ -1,0 +1,6 @@
+docker run --rm \
+--cpus 8 \
+--gpus device=0 \
+-p8080:8080 -p8081:8081 -p8082:8082 \
+--mount type=bind,source=`realpath ./model`,target=/home/model-server/model-store \
+mmocr-serve:latest

@@ -39,7 +39,7 @@ test_pipeline = [
         ])
 ]
 dataset_type = 'KIEDataset'
-data_root = 'tests/dataset/'
+data_root = 'tests/wildreceipt/'
 loader = dict(
     type='AnnFileLoader',
     repeat=1,
@@ -48,7 +48,7 @@ loader = dict(
         keys=['file_name', 'height', 'width', 'annotations']))
 train = dict(
     type='KIEDataset',
-    ann_file='tests/dataset//closeset_train.txt',
+    ann_file='tests/wildreceipt/train.txt',
     pipeline=[
         dict(type='LoadImageFromFile'),
         dict(type='LoadAnnotations'),
@@ -65,18 +65,18 @@ train = dict(
             type='Collect',
             keys=['img', 'relations', 'texts', 'gt_bboxes', 'gt_labels'])
     ],
-    img_prefix='tests/dataset//train/',
+    img_prefix='tests/wildreceipt/image-files/',
     loader=dict(
         type='AnnFileLoader',
         repeat=1,
         parser=dict(
             type='LineJsonParser',
             keys=['file_name', 'height', 'width', 'annotations'])),
-    dict_file='tests/dataset//dict.txt',
+    dict_file='tests/wildreceipt/dict.txt',
     test_mode=False)
 test = dict(
     type='KIEDataset',
-    ann_file='tests/dataset//closeset_test.txt',
+    ann_file='tests/wildreceipt/test.txt',
     pipeline=[
         dict(type='LoadImageFromFile'),
         dict(type='LoadAnnotations'),
@@ -97,14 +97,14 @@ test = dict(
                 'ori_texts'
             ])
     ],
-    img_prefix='tests/dataset//test/',
+    img_prefix='tests/wildreceipt/image_files/',
     loader=dict(
         type='AnnFileLoader',
         repeat=1,
         parser=dict(
             type='LineJsonParser',
             keys=['file_name', 'height', 'width', 'annotations'])),
-    dict_file='tests/dataset//dict.txt',
+    dict_file='tests/wildreceipt/dict.txt',
     test_mode=True)
 data = dict(
     samples_per_gpu=1,
@@ -113,7 +113,7 @@ data = dict(
     test_dataloader=dict(samples_per_gpu=1),
     train=dict(
         type='KIEDataset',
-        ann_file='tests/dataset//closeset_train.txt',
+        ann_file='tests/wildreceipt/train.txt',
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(type='LoadAnnotations'),
@@ -130,18 +130,18 @@ data = dict(
                 type='Collect',
                 keys=['img', 'relations', 'texts', 'gt_bboxes', 'gt_labels'])
         ],
-        img_prefix='tests/dataset//train/',
+        img_prefix='tests/wildreceipt/image_files/',
         loader=dict(
             type='AnnFileLoader',
             repeat=1,
             parser=dict(
                 type='LineJsonParser',
                 keys=['file_name', 'height', 'width', 'annotations'])),
-        dict_file='tests/dataset//dict.txt',
+        dict_file='tests/wildreceipt/dict.txt',
         test_mode=False),
     val=dict(
         type='KIEDataset',
-        ann_file='tests/dataset//closeset_test.txt',
+        ann_file='tests/wildreceipt/test.txt',
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(type='LoadAnnotations'),
@@ -162,18 +162,18 @@ data = dict(
                     'ori_texts'
                 ])
         ],
-        img_prefix='tests/dataset//test/',
+        img_prefix='tests/wildreceipt/image_files/',
         loader=dict(
             type='AnnFileLoader',
             repeat=1,
             parser=dict(
                 type='LineJsonParser',
                 keys=['file_name', 'height', 'width', 'annotations'])),
-        dict_file='tests/dataset//dict.txt',
+        dict_file='tests/wildreceipt/dict.txt',
         test_mode=True),
     test=dict(
         type='KIEDataset',
-        ann_file='tests/dataset//closeset_test.txt',
+        ann_file='tests/wildreceipt/test.txt',
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(type='LoadAnnotations'),
@@ -194,14 +194,14 @@ data = dict(
                     'ori_texts'
                 ])
         ],
-        img_prefix='tests/dataset//test/',
+        img_prefix='tests/wildrecept/image_files/',
         loader=dict(
             type='AnnFileLoader',
             repeat=1,
             parser=dict(
                 type='LineJsonParser',
                 keys=['file_name', 'height', 'width', 'annotations'])),
-        dict_file='tests/dataset//dict.txt',
+        dict_file='tests/wildreceipt/dict.txt',
         test_mode=True))
 evaluation = dict(
     interval=1,
@@ -217,7 +217,7 @@ model = dict(
     visual_modality=True,
     train_cfg=None,
     test_cfg=None,
-    class_list='tests/dataset//class_list.txt')
+    class_list='tests/wildreceipt/class_list.txt')
 optimizer = dict(type='Adam', weight_decay=0.0001)
 optimizer_config = dict(grad_clip=None)
 lr_config = dict(
