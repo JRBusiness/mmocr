@@ -1,0 +1,5 @@
+C:\Users\jerry\Documents\GitHub\mmocr2\tests\wildreceipt\image_files\0a0d8208b998661ded4bb7fd675a4a15.jpg	1
+C:\Users\jerry\Documents\GitHub\mmocr2\tests\wildreceipt\image_files\c22368684955921032f78f1e2a69e5cc.jpg	1
+C:\Users\jerry\Documents\GitHub\mmocr2\tests\wildreceipt\image_files\0a5d30379e85e9d9e6edde65bb4fddef.jpg	1
+C:\Users\jerry\Documents\GitHub\mmocr2\tests\wildreceipt\image_files\0a695dfb03f2f9092b11909dce28a380.jpg	1
+C:\Users\jerry\Documents\GitHub\mmocr2\tests\wildreceipt\image_files\0ad0e41f62502818c95420b3032dd60a.jpg	1
